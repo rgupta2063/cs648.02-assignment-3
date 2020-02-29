@@ -10,9 +10,6 @@ class ProductInventory extends React.Component{
     }
     
     async loadData(){
-        // setTimeout(() => {
-        //     this.setState({ products: initialproducts });
-        // }, 500);
         const query = `query{
             productList {
                 id category name price image
@@ -23,26 +20,12 @@ class ProductInventory extends React.Component{
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({ query })
         });
-        // const body = await response.text();
-        // const result = JSON.parse(body);
+        
         const result = await response.json();
         this.setState({products:result.data.productList});
     }
 
     async createProduct(product) {
-        // const newproductList = this.state.products.slice();
-        // newproductList.push(product);
-        // this.setState({ products: newproductList });
-        // const query = `mutation {
-        //     addProduct(product: {
-        //         category: "${product.category}",
-        //         name :"${product.name}",
-        //         price :"${product.price}",
-        //         image :"${product.image}",
-        //     }){
-        //         id
-        //     }
-        // }`;
         const query = `mutation addProduct($product: ProductInputs!){
             addProduct(product: $product){
                 id
@@ -53,6 +36,7 @@ class ProductInventory extends React.Component{
             headers: {'Content-Type':'application/json'},
             body :JSON.stringify({query, variables:{product}})
         });
+        
         if(response){
             this.loadData();}
     }
@@ -69,17 +53,7 @@ class ProductInventory extends React.Component{
         );
     }
 }
-// const initialproducts = [
-//     {
-//         id:1,category: 'Shirts', name: 'Blue Shirt', price: 34.00, image:'https://vanheusen.partnerbrands.com/en/flex-regular-wrinkle-free-button-up-dress-shirt-20F6194?camp=PPC_PLA_Brand&gclid=CjwKCAiAy9jyBRA6EiwAeclQhGezscRCHA75G8pHj2ELSXM_-hKOW_3lXs_5NgqNSI-XVfo61yJkSxoCA70QAvD_BwE&gclsrc=aw.ds'
-//     },
-//     {
-//         id: 2,category: 'Accessories', name: 'Gold Earring', price: 64.00, image:'https://www.etsy.com/listing/453173668/14k-gold-mini-hoop-earrings-14k-solid?gpla=1&gao=1&'
-//     },
-//     {
-//         id: 3,category: 'Jackets', name: 'Sweatshirt', price: 7.98, image:'https://www.bulkapparel.com/fleece/hanes-p170-ecosmart-hooded-sweatshirt?gclid=CjwKCAiAy9jyBRA6EiwAeclQhDITTH_V5CVCRRF2IEKhrzUtmJtLPbghYO3hux6zuBv38kPfS9V7HxoCdtcQAvD_BwE'
-//     }
-// ];
+
 
 function ProductTable(props){
         const productRows = props.products.map((product,index)=><ProductRow key={index} product={product}/>);

@@ -1,2 +1,3 @@
-# cs648.02-assignment-3
- MERN-GraphQl
+# MERN-GraphQl
+## Establish a GraphQL schema and then build out both create and retrieve APIs for Product inventory ## management application.
+
